@@ -1,0 +1,6 @@
+<app-search-bar (searchChanged)="changeHandler($event)"></app-search-bar>
+<ul>
+  <li *ngFor="let file of files">
+    {{ file.name }}
+  </li>
+</ul>

@@ -5,10 +5,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { MockDataServiceService } from './services/MockDataService';
+import { MediaListComponent } from './media-list/media-list.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
+import { FilterByComponent } from './filter-by/filter-by.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    MediaListComponent,
+    SearchBarComponent,
+    FilterByComponent
   ],
   imports: [
     BrowserModule,
