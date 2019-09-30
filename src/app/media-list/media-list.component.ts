@@ -61,4 +61,8 @@ export class MediaListComponent implements OnChanges {
     this._currentSearchPhrase = '';
     this.currentFilter = defaultFilter;
   }
+
+  trackByFiles(index, item) {
+    return item.id;
+  }
 }

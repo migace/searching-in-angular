@@ -21,7 +21,7 @@
 <div class="columns">
   <div class="column is-11 is-offset-1">
     <ul>
-      <li *ngFor="let file of files">
+      <li *ngFor="let file of files; trackBy: trackByFiles">
         {{ file.name }}
       </li>
     </ul>
