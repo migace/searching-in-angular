@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { FilesService, File, Filetype } from './services/FilesService';
 import { Filter } from './filter-by/types';
@@ -8,10 +9,11 @@ import { Filter } from './filter-by/types';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'MediaLibrary';
   files: File[] = [];
   filtersList: Filter[] = [];
+  fileSubscribe: Subscription;
 
   constructor(private filesService: FilesService) {
     this.filtersList = [{
@@ -30,6 +32,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.filesService.getFiles().subscribe(data => this.files = data);
+    this.fileSubscribe = this.filesService.getFiles().subscribe(data => this.files = data);
+  }
+
+  ngOnDestroy() {
+    this.fileSubscribe.unsubscribe();
   }
 }

@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { get } from 'lodash';
+
 import { Filter } from './types';
 import { Filetype } from '../services/FilesService';
 
@@ -7,34 +9,36 @@ import { Filetype } from '../services/FilesService';
   templateUrl: './filter-by.component.html',
   styleUrls: ['./filter-by.component.css']
 })
-export class FilterByComponent implements OnInit, OnChanges {
+export class FilterByComponent implements OnChanges {
   @Input() filtersList: Filter[];
-  @Output() selectedFilter = new EventEmitter<Filetype>();
-  _allMediaFiler = {
+  @Input() currentFilter: Filter;
+  @Output() selectedFilter = new EventEmitter<Filter>();
+  _allMediaFilter = {
     type: Filetype.Any,
     name: 'All media',
   };
-  currentFilter: Filter = this._allMediaFiler;
-  dropdownStatus: boolean = false;
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+  _currentFilterSelected: Filter = this._allMediaFilter;
+  _dropdownStatus: boolean = false;
 
   ngOnChanges(changes: SimpleChanges) {
-    changes.filtersList.currentValue.unshift(this._allMediaFiler);
+    if (get(changes, 'filtersList', false)) {
+      changes.filtersList.currentValue.unshift(this._allMediaFilter);    
+    }
+
+    if (get(changes, 'currentFilter.currentValue', false)) {
+      this._currentFilterSelected = changes.currentFilter.currentValue;
+    }
   }
 
   dropdownClickHandler() {
-    this.dropdownStatus = !this.dropdownStatus;
+    this._dropdownStatus = !this._dropdownStatus;
   }
 
-  selectClickHandler(filetype: Filetype) {
-    this.currentFilter = {
-      type: filetype,
-      name: this.filtersList.find(filter => filter.type === filetype).name
+  selectClickHandler(filter: Filter) {
+    this._currentFilterSelected = {
+      type: filter.type,
+      name: filter.name,
     };
-    this.selectedFilter.emit(filetype);
+    this.selectedFilter.emit(filter);
   }
 }

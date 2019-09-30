@@ -1,7 +1,29 @@
-<app-filter-by [filtersList]="filtersList" (selectedFilter)="selectedFilterHandler($event)"></app-filter-by>
-<app-search-bar (searchChanged)="changeHandler($event)"></app-search-bar>
-<ul>
-  <li *ngFor="let file of files">
-    {{ file.name }}
-  </li>
-</ul>
+<nav class="panel">
+    <p class="panel-heading">
+      Search by
+    </p>
+    <div class="panel-block">
+      <div class="field has-addons">
+        <p class="control">
+          <span class="select">
+            <app-filter-by [currentFilter]="currentFilter" [filtersList]="filtersList" (selectedFilter)="selectedFilterHandler($event)"></app-filter-by>
+          </span>
+        </p>
+        <p class="control is-expanded">
+          <app-search-bar [search]="searchValue" (searchChanged)="searchChanged($event)"></app-search-bar>
+        </p>
+        <p class="control">
+          <a class="button is-danger" (click)="clearHandler($event)">Clear</a>
+        </p>
+      </div>
+    </div>
+</nav>
+<div class="columns">
+  <div class="column is-11 is-offset-1">
+    <ul>
+      <li *ngFor="let file of files">
+        {{ file.name }}
+      </li>
+    </ul>
+  </div>   
+</div>

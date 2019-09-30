@@ -1,1 +1,1 @@
-<input #search placeholder="" (keyup)="changeHandler(search.value)" />
+<input class="input" placeholder="" [(ngModel)]="searchValue" (ngModelChange)="change()"/>
