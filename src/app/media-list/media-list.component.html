@@ -1,3 +1,4 @@
+<app-filter-by [filtersList]="filtersList" (selectedFilter)="selectedFilterHandler($event)"></app-filter-by>
 <app-search-bar (searchChanged)="changeHandler($event)"></app-search-bar>
 <ul>
   <li *ngFor="let file of files">

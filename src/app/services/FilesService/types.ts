@@ -3,6 +3,7 @@ export enum Filetype {
   Document,
   Video,
   Audio,
+  Any,
 }
 
 export type File = {
